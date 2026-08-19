@@ -1,7 +1,9 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
     import HomeBackground from '$lib/assets/images/home-background.jpg';
 
     let firstText = $state<HTMLParagraphElement | null>(null);
@@ -52,7 +54,7 @@
     });
 </script>
 
-<main class="relative flex h-screen mb-[100vh] overflow-x-clip">
+<main class="relative flex h-screen overflow-x-clip">
     <enhanced:img 
         src={HomeBackground} 
         alt="Landing Page"
@@ -62,10 +64,10 @@
     <div class="absolute top-[calc(100vh-350px)]">
         <div bind:this={slider} class="slider relative whitespace-nowrap">
             <p bind:this={firstText} class="relative m-0 text-white text-[230px] font-medium pr-12.5">
-                Freelance Developer -
+                Software Developer -
             </p>
             <p bind:this={secondText} class="absolute left-full top-0 m-0 text-white text-[230px] font-medium pr-12.5">
-                Freelance Developer -
+                Software Developer -
             </p>
         </div>
     </div>

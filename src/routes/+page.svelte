@@ -1,10 +1,14 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte'
+    
     import Lenis from 'lenis'
     import gsap from 'gsap'
     import { ScrollTrigger } from 'gsap/ScrollTrigger'
-    import Landing from '$lib/components/home/Landing.svelte'
 
+    import Landing from '$lib/components/home/Landing.svelte'
+	import Projects from '$lib/components/projects/Projects.svelte';
+
+    
     let lenis: Lenis | undefined
 
     function raf(time: number) {
@@ -34,4 +38,5 @@
 
 <main>
     <Landing />
+    <Projects />
 </main>
