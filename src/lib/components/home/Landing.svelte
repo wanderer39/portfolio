@@ -56,7 +56,7 @@
     });
 </script>
 
-<section bind:this={el} data-theme="light" class="relative flex flex-col h-full overflow-x-clip">
+<section bind:this={el} class="relative flex flex-col h-full overflow-x-clip">
 
     <div class="w-full h-screen bg-(--light-background) flex justify-center items-center">
         <h1 class="text-7xl text-(--light-text)">Landing</h1>
