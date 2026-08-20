@@ -7,9 +7,17 @@
 
     import Landing from '$lib/components/home/Landing.svelte'
 	import Projects from '$lib/components/projects/Projects.svelte';
+	import About from '$lib/components/about/About.svelte';
+	import ScrollProgress from '$lib/components/navigation/ScrollProgress.svelte';
+	import Footer from '$lib/components/footer/Footer.svelte';
 
     
     let lenis: Lenis | undefined
+
+    let landingEl: HTMLElement | undefined = $state(undefined)
+    let projectsEl: HTMLElement | undefined = $state(undefined)
+    let aboutEl: HTMLElement | undefined = $state(undefined)
+    let footerEl: HTMLElement | undefined = $state(undefined)
 
     function raf(time: number) {
         // gsap.ticker's `time` is in seconds; Lenis expects milliseconds
@@ -36,7 +44,11 @@
     })
 </script>
 
+<ScrollProgress {landingEl} {projectsEl} {aboutEl} {footerEl} />
+
 <main>
-    <Landing />
-    <Projects />
+    <Landing bind:el={landingEl} />
+    <Projects bind:el={projectsEl} />
+    <About bind:el={aboutEl} />
+    <Footer bind:el={footerEl} />
 </main>

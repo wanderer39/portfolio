@@ -3,13 +3,13 @@
 
     let {
         landingEl,
-        worksEl,
         projectsEl,
+        aboutEl,
         footerEl
     }: {
         landingEl?: HTMLElement
-        worksEl?: HTMLElement
         projectsEl?: HTMLElement
+        aboutEl?: HTMLElement
         footerEl?: HTMLElement
     } = $props()
 
@@ -31,19 +31,19 @@
     }
 
     const landing = useSectionProgress(() => landingEl, ['start start', 'end start'])
-    const works = useSectionProgress(() => worksEl, ['start start', 'end start'])
     const projects = useSectionProgress(() => projectsEl, ['start start', 'end start'])
+    const about = useSectionProgress(() => aboutEl, ['start start', 'end start'])
     const footer = useSectionProgress(() => footerEl, ['start start', 'end end'])
 
     let landingHeight = $state(0)
-    let worksHeight = $state(0)
     let projectsHeight = $state(0)
+    let aboutHeight = $state(0)
     let footerHeight = $state(0)
 
     function measure() {
         landingHeight = landingEl?.offsetHeight ?? 0
-        worksHeight = worksEl?.offsetHeight ?? 0
         projectsHeight = projectsEl?.offsetHeight ?? 0
+        aboutHeight = aboutEl?.offsetHeight ?? 0
         footerHeight = footerEl?.offsetHeight ?? 0
     }
 
@@ -53,13 +53,11 @@
         return () => window.removeEventListener('resize', measure)
     })
 
-    // Bundle each section's data so the markup can iterate instead of
-    // repeating four near-identical blocks.
     const bars = $derived([
-        { key: 'landing', height: landingHeight, progress: landing, label: 'landing' },
-        { key: 'works', height: worksHeight, progress: works, label: 'works' },
+        { key: 'landing', height: landingHeight * 1.5, progress: landing, label: 'landing' },
         { key: 'projects', height: projectsHeight, progress: projects, label: 'projects' },
-        { key: 'footer', height: footerHeight, progress: footer, label: 'footer' }
+        { key: 'about', height: aboutHeight, progress: about, label: 'about' },
+        { key: 'footer', height: footerHeight / 2, progress: footer, label: 'footer' }
     ])
 
     const barTransition: MotionTransition = {
@@ -68,20 +66,58 @@
         ease: 'easeOut'
     }
 
+    // ---- theme tracking (replaces mix-blend-mode) ----
+    let wrapperEl: HTMLElement | undefined = $state(undefined)
+    let theme = $state<'light' | 'dark'>('light')
+
+    function updateTheme() {
+        if (!wrapperEl) return
+        const barY = wrapperEl.getBoundingClientRect().top + wrapperEl.offsetHeight / 2
+        const sections = [landingEl, projectsEl, aboutEl, footerEl]
+
+        for (const el of sections) {
+            if (!el) continue
+            const rect = el.getBoundingClientRect()
+            if (barY >= rect.top && barY <= rect.bottom) {
+                const t = el.dataset.theme as 'light' | 'dark' | undefined
+                if (t) theme = t
+                return
+            }
+        }
+    }
+
+    $effect(() => {
+        let raf = 0
+        const onScroll = () => {
+            cancelAnimationFrame(raf)
+            raf = requestAnimationFrame(updateTheme)
+        }
+        updateTheme()
+        window.addEventListener('scroll', onScroll, { passive: true })
+        window.addEventListener('resize', onScroll)
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+            window.removeEventListener('resize', onScroll)
+            cancelAnimationFrame(raf)
+        }
+    })
+
     const trackStyle = styleString(() => ({
-        height: '6px',
+        height: '1px',
         width: '100%',
-        border: '1px solid var(--brut-ink, #0a0a0a)',
-        background: 'var(--brut-bg-2, #eef4f1)',
+        background: 'hsl(0, 0%, 70%)',
         overflow: 'hidden'
     }))
 
-    const fillStyle = styleString(() => ({
-        height: '100%',
-        width: '100%',
-        background: 'var(--brut-accent, #247768)',
-        transformOrigin: 'left'
-    }))
+    const fillStyle = $derived(
+        styleString(() => ({
+            height: '100%',
+            width: '100%',
+            background: theme === 'light' ? 'black' : 'white',
+            transformOrigin: 'left',
+            transition: 'background-color 0.4s ease'
+        }))
+    )
 </script>
 
 {#snippet progressBar(height: number, value: number)}
@@ -97,35 +133,17 @@
     </div>
 {/snippet}
 
-<div class="fixed top-6 left-6 right-6 flex items-center gap-6 z-50 pointer-events-none">
+<div bind:this={wrapperEl} class="fixed top-6 left-6 right-6 flex items-center gap-6 z-50 pointer-events-none">
     {#each bars as bar (bar.key)}
         {@render progressBar(bar.height, bar.progress.value)}
     {/each}
 </div>
 
 <!-- TESTING ONLY: remove before shipping -->
-<div class="debug-readout">
+<div class="debug-readout fixed bottom-6 right-6 z-50 flex flex-col gap-1 py-2 px-3 border-[#0a0a0a] border
+    text-[0.75rem] font-mono text-(--light-text) bg-(--light-primary) pointer-events-none shadow-[4px_4px_0_var(--brut-rule,#d6dedb)]">
     {#each bars as bar (bar.key)}
         <span>{bar.label}: {bar.progress.pct}%</span>
     {/each}
+    <span>theme: {theme}</span>
 </div>
-
-<style>
-    .debug-readout {
-        position: fixed;
-        bottom: 1.5rem;
-        right: 1.5rem;
-        z-index: 50;
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        padding: 0.5rem 0.75rem;
-        font-family: var(--brut-mono, monospace);
-        font-size: 0.75rem;
-        color: var(--brut-ink, #0a0a0a);
-        background: var(--brut-bg, #f8fcfb);
-        border: 1px solid var(--brut-ink, #0a0a0a);
-        box-shadow: 4px 4px 0 var(--brut-rule, #d6dedb);
-        pointer-events: none;
-    }
-</style>

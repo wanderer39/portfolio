@@ -1,10 +1,9 @@
-<!-- Landing.svelte -->
 <script lang="ts">
     let { el = $bindable() }: { el?: HTMLElement } = $props()
 </script>
 
-<section class="w-full h-dvh bg-white" bind:this={el}>
+<section bind:this={el} data-theme="dark" class="w-full h-[300dvh]">
     <div>
-        <h1>Landing</h1>
+        <h1>Footer</h1>
     </div>
 </section>
