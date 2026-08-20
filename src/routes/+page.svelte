@@ -5,16 +5,17 @@
     import gsap from 'gsap'
     import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-    import Landing from '$lib/components/home/Landing.svelte'
+    import Navbar from '$lib/components/navigation/Navbar.svelte';
+
+    import Home from '$lib/components/home/Home.svelte';
 	import Projects from '$lib/components/projects/Projects.svelte';
 	import About from '$lib/components/about/About.svelte';
-	import ScrollProgress from '$lib/components/navigation/ScrollProgress.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 
     
     let lenis: Lenis | undefined
 
-    let landingEl: HTMLElement | undefined = $state(undefined)
+    let homeEl: HTMLElement | undefined = $state(undefined)
     let projectsEl: HTMLElement | undefined = $state(undefined)
     let aboutEl: HTMLElement | undefined = $state(undefined)
     let footerEl: HTMLElement | undefined = $state(undefined)
@@ -44,10 +45,10 @@
     })
 </script>
 
-<ScrollProgress {landingEl} {projectsEl} {aboutEl} {footerEl} />
+<Navbar {homeEl} {projectsEl} {aboutEl} {footerEl} />
 
 <main>
-    <Landing bind:el={landingEl} />
+    <Home bind:el={homeEl} />
     <Projects bind:el={projectsEl} />
     <About bind:el={aboutEl} />
     <Footer bind:el={footerEl} />
