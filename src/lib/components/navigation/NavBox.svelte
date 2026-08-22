@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { motion, styleString, type MotionTransition } from '@humanspeak/svelte-motion';
-	import ArrowIcon from './ArrowIcon.svelte';
+
+	import ArrowIcon from '$lib/components/navigation/ArrowIcon.svelte';
 
 	let {
 		href,
@@ -24,27 +25,11 @@
 		variant?: 'title' | 'icon';
 	} = $props();
 
-	// Each NavBox now owns its own arrow animation state, instead of
-	// sharing one variable across every nav item (as the original did).
-	let arrowPosition: 'initial' | 'origin' | 'final' = $state('initial');
-	// Drives the circular wrapper scale-in that used to be a pure
-	// `.nav-link:hover .arrow-icon-wrapper` selector; now explicit since
-	// ArrowIcon is a separate component and can't see the parent's :hover.
 	let hovered = $state(false);
 
 	function handleClick(e: MouseEvent) {
 		e.preventDefault();
 		targetEl?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-	}
-
-	function handleMouseEnter() {
-		arrowPosition = 'origin';
-		hovered = true;
-	}
-
-	function handleMouseLeave() {
-		arrowPosition = 'final';
-		hovered = false;
 	}
 
 	// Smooth, non-spring transition: a plain eased tween applied to
@@ -70,22 +55,23 @@
 	}));
 </script>
 
-<div class="nav-progress-box" style="flex: {flexBasis || 1} 1 0;">
-	<div class="nav-item">
+<div class="isolation-auto flex min-w-0 flex-col" style="flex: {flexBasis || 1} 1 0;">
+	<div class="size-full flex-1 border-none outline-none">
 		<a
 			// eslint-disable-next-line svelte/no-navigation-without-resolve
 			{href}
-			class="nav-link"
+			class="group flex size-full cursor-pointer items-center pb-4 border-none outline-none 
+                text-xl text-(--dark-text) no-underline mix-blend-difference"
 			onclick={handleClick}
-			onmouseenter={handleMouseEnter}
-			onmouseleave={handleMouseLeave}
+			onmouseenter={() => (hovered = true)}
+			onmouseleave={() => (hovered = false)}
 		>
 			{#if variant === 'title'}
-				<h1 class="text-4xl font-medium">{label}</h1>
+				<h1 class="text-4xl font-normal font-inter uppercase">{label}</h1>
 			{:else}
-				<div class="nav-link-box">
-					<svg
-						class="ring-icon"
+				<div class="relative mt-3 flex items-center gap-6">
+					<svg class="size-4 shrink-0 origin-center scale-100 opacity-100
+						transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.32,0,0.48,1)] group-hover:scale-0 group-hover:opacity-0"
 						viewBox="0 0 24 24"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
@@ -98,8 +84,10 @@
 							stroke-linejoin="round"
 						/>
 					</svg>
-					<h2 class="text-lg">{label}</h2>
-					<ArrowIcon bind:position={arrowPosition} active={hovered} />
+					<h2 class="text-base font-inter font-normal uppercase translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.32,1,0.42,1)] group-hover:-translate-x-10">
+						{label}
+					</h2>
+					<ArrowIcon active={hovered} />
 				</div>
 			{/if}
 		</a>
@@ -113,69 +101,3 @@
 		/>
 	</div>
 </div>
-
-<style>
-	.nav-progress-box {
-		isolation: auto;
-		min-width: 0px;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.nav-item {
-		flex: 1;
-		width: 100%;
-		height: 100%;
-		border: none;
-		outline: none;
-	}
-
-	.nav-link {
-		width: 100%;
-		height: 100%;
-		padding-bottom: 1rem;
-		display: flex;
-		align-items: center;
-		font-size: 1.25rem;
-		color: var(--dark-text);
-		text-decoration: none;
-		mix-blend-mode: difference;
-		border: none;
-		outline: none;
-		cursor: pointer;
-	}
-
-	.nav-link-box {
-		position: relative;
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-		margin-top: 0.75rem;
-	}
-
-	.ring-icon {
-		flex: 0 0 auto;
-		width: 1rem;
-		height: 1rem;
-		transform: scale(1);
-		opacity: 1;
-		transform-origin: center;
-		transition:
-			transform 300ms cubic-bezier(0.32, 0, 0.48, 1),
-			opacity 200ms ease;
-	}
-
-	.nav-link:hover .ring-icon {
-		transform: scale(0);
-		opacity: 0;
-	}
-
-	.nav-link-box h2 {
-		transform: translateX(0);
-		transition: transform 500ms cubic-bezier(0.32, 1, 0.42, 1);
-	}
-
-	.nav-link:hover .nav-link-box h2 {
-		transform: translateX(-2.5rem);
-	}
-</style>

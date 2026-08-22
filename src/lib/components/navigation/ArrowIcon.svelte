@@ -1,17 +1,30 @@
 <script lang="ts">
-	let {
-		position = $bindable('initial'),
-		active = false
-	}: {
-		/** Slide-in/slide-out phase of the arrow glyph itself */
-		position?: 'initial' | 'origin' | 'final';
-		/** Whether the circular wrapper should be scaled in (i.e. parent link is hovered) */
-		active?: boolean;
-	} = $props();
+	let { active = false }: { active?: boolean; } = $props();
+
+	let visualState: 'initial' | 'origin' | 'final' = $state('initial');
+	let svgEl: SVGSVGElement;
+
+	function restartTransition(next: 'origin' | 'final') {
+		// Force a synchronous reflow so the browser "forgets" any in-flight
+		// transition before we apply the new class — this is what lets the
+		// animation restart cleanly on a fast re-hover instead of resuming
+		// mid-flight.
+		visualState = 'initial';
+		if (svgEl) svgEl.getBoundingClientRect(); // force reflow
+		visualState = next;
+	}
+
+	$effect(() => {
+		if (active) {
+			restartTransition('origin');
+		} else {
+			restartTransition('final');
+		}
+	});
 
 	function handleTransitionEnd(event: TransitionEvent) {
-		if (event.propertyName === 'transform' && position === 'final') {
-			position = 'initial';
+		if (event.propertyName === 'transform' && visualState === 'final' && !active) {
+			visualState = 'initial';
 		}
 	}
 </script>
@@ -19,12 +32,13 @@
 <div class="arrow-icon-wrapper" class:active>
 	<div class="arrow-icon-clip">
 		<svg
+			bind:this={svgEl}
 			class={[
 				'arrow-icon',
 				{
-					'arrow-icon-initial': position === 'initial',
-					'arrow-icon-origin': position === 'origin',
-					'arrow-icon-final': position === 'final'
+					'arrow-icon-initial': visualState === 'initial',
+					'arrow-icon-origin': visualState === 'origin',
+					'arrow-icon-final': visualState === 'final'
 				}
 			]}
 			ontransitionend={handleTransitionEnd}
@@ -92,6 +106,7 @@
 
 	.arrow-icon-initial {
 		transform: translate(-150%, 150%);
+		transition: none;
 	}
 
 	.arrow-icon-origin {

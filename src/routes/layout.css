@@ -2,6 +2,36 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/fonts/InterVariable.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/fonts/MontserratVariable.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Rubik Regular";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/Rubik-Regular.woff2") format("woff2");
+}
+
+@theme {
+    --font-inter: "Inter", "Helvetica Neue", Arial, sans-serif;                                     /* text-font */ 
+    --font-montserrat: "Montserrat", "Helvetica Neue", Arial, sans-serif;                           /* heading-font */
+    --font-rubik: "Rubik Regular", "Trebuchet MS", "Helvetica Neue", Arial, sans-serif;             /* button-font */
+}
+
 
 :root {
     --dark-text: hsl(0, 0%, 95%);
@@ -36,5 +66,4 @@ body {
     background-color: var(--dark-background);
     color: var(--dark-text);
     /* cursor: wait;           Add after Preloader */
-    /* font-family: HelveticaNowDisplay-Black, sansserif; */
 }

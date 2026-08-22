@@ -79,7 +79,7 @@
 	});
 </script>
 
-<div class="fixed top-6 right-6 left-6 z-50 flex h-14 items-end gap-6 mix-blend-difference">
+<div class="fixed top-6 right-10 left-10 z-50 flex h-14 items-end gap-6 mix-blend-difference">
 	<NavBox
 		href="#home"
 		label="Wanderer"
