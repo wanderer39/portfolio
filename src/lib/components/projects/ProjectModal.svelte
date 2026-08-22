@@ -87,7 +87,7 @@
 				class="flex h-full w-full items-center justify-center"
 				style="background-color: {project.color}"
 			>
-				<img src={`/images/${project.src}`} width="300" alt="modal preview" class="h-auto" />
+				<enhanced:img src={project.src} width="300" alt="modal preview" class="h-auto" />
 			</div>
 		{/each}
 	</div>

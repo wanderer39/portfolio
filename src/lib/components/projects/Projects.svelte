@@ -2,6 +2,7 @@
 	import ProjectItem from "$lib/components/projects/ProjectItem.svelte";
 	import ProjectModal from "$lib/components/projects/ProjectModal.svelte";
 
+	import HomeBackground from "$lib/assets/images/home-background.jpg";
 	
 	let { el = $bindable() }: { el?: HTMLElement } = $props()
 
@@ -20,25 +21,25 @@
 	const projects: ProjectsProps[] = [
 		{
 			title: 'C2 Montreal',
-			src: 'c2montreal.png',
+			src: HomeBackground,
 			color: '#000000',
 			category: 'Design & Development'
 		},
 		{
 			title: 'Office Studio',
-			src: 'officestudio.png',
+			src: HomeBackground,
 			color: '#8C8C8C',
 			category: 'Design & Development'
 		},
 		{
 			title: 'Locomotive',
-			src: 'locomotive.png',
+			src: HomeBackground,
 			color: '#EFE8D3',
 			category: 'Design & Development'
 		},
 		{
 			title: 'Silencio',
-			src: 'silencio.png',
+			src: HomeBackground,
 			color: '#706D63',
 			category: 'Design & Development'
 		}
