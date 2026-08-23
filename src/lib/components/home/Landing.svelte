@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import gsap from "gsap";
 	import { SplitText } from "gsap/SplitText";
-	import { onMount } from "svelte";
 
-    let heroHeadingEls: HTMLHeadingElement[] = [];
+    let heroHeadingEls: HTMLHeadingElement[] = $state([]);
 	let heroTextEl: HTMLParagraphElement;
 
 	onMount(async () => {
@@ -71,7 +71,7 @@
 
 	<div class="absolute left-10 top-204 h-24 w-126 py-0 px-2 m-0 flex">
 		<p bind:this={heroTextEl} 
-			class="m-0 p-0 text-[clamp(0.7rem,1vw,0.95rem)] leading-[1.4] text-(--light-accent) font-montserrat font-medium uppercase">
+			class="m-0 p-0 text-[clamp(0.7rem,0.7vw,0.95rem)] leading-[1.4] text-(--light-accent) font-inter font-normal uppercase">
 			Shaping ideas into refined digital experiences where creative thinking meets systems design, analytical problem-solving, and careful engineering to create work that is purposeful, intuitive, and built to last.
 		</p>
 	</div>

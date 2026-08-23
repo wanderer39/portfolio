@@ -6,15 +6,17 @@
 
     import HomeBackground from '$lib/assets/images/home-background.jpg';
 
-    let firstText = $state<HTMLParagraphElement | null>(null);
-    let secondText = $state<HTMLParagraphElement | null>(null);
-    let slider = $state<HTMLDivElement | null>(null);
+    let firstText: HTMLParagraphElement | undefined = $state();
+    let secondText: HTMLParagraphElement | undefined = $state();
+    let slider: HTMLDivElement | undefined = $state();
 
     let xPercent = 0;
     let direction = -1;
     let animationFrameId: number;
 
     const animate = () => {
+        if (!firstText || !secondText) return;
+
         if (xPercent < -100) {
             xPercent = 0;
         } else if (xPercent > 0) {
@@ -28,6 +30,8 @@
 
     onMount(() => {
         gsap.registerPlugin(ScrollTrigger);
+
+        if (!slider) return;
 
         if (secondText) {
             gsap.set(secondText, { left: secondText.getBoundingClientRect().width });
@@ -55,7 +59,7 @@
 </script>
 
 <div class="relative w-full h-screen">
-    <enhanced:img 
+    <img 
         src={HomeBackground} 
         alt="Landing Page"
         class="absolute inset-0 h-full w-full object-cover -z-10" 
