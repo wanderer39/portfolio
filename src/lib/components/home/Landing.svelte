@@ -61,7 +61,7 @@
 		</h1>
 	</div>
 
-	<div class="flex p-0 m-0 absolute top-192 right-10">
+	<div class="flex p-0 m-0 absolute top-[41%] right-10">
 		<h1 
 			bind:this={heroHeadingEls[1]} 
 			class="m-0 p-0 text-[clamp(4rem,7vw,10rem)] leading-[0.9] text-(--light-text) font-montserrat font-semibold italic" 
@@ -69,7 +69,7 @@
 		</h1>
 	</div>
 
-	<div class="absolute left-10 top-204 h-24 w-126 py-0 px-2 m-0 flex">
+	<div class="absolute left-10 top-[43%] h-24 w-126 py-0 px-2 m-0 flex">
 		<p bind:this={heroTextEl} 
 			class="m-0 p-0 text-[clamp(0.7rem,0.7vw,0.95rem)] leading-[1.4] text-(--light-accent) font-inter font-normal uppercase">
 			Shaping ideas into refined digital experiences where creative thinking meets systems design, analytical problem-solving, and careful engineering to create work that is purposeful, intuitive, and built to last.
