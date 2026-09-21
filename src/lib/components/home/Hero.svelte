@@ -4,8 +4,6 @@
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-    import HomeBackground from '$lib/assets/images/home-background.jpg';
-
     let firstText: HTMLParagraphElement | undefined = $state();
     let secondText: HTMLParagraphElement | undefined = $state();
     let slider: HTMLDivElement | undefined = $state();
@@ -59,12 +57,6 @@
 </script>
 
 <div class="relative w-full h-screen">
-    <img 
-        src={HomeBackground} 
-        alt="Landing Page"
-        class="absolute inset-0 h-full w-full object-cover -z-10" 
-    />
-
     <div class="absolute top-[calc(100vh-350px)]">
         <div bind:this={slider} class="slider relative whitespace-nowrap">
             <p bind:this={firstText} class="relative m-0 text-white text-[230px] font-medium pr-12.5">

@@ -8,11 +8,10 @@
     import fragmentShader from '$lib/components/models/mercury-blob/shaders/mercury.frag?raw';
 
     interface Props extends MercuryOptions {
-        /** Base sphere scale (still shrinks on portrait screens). */
+        /** Base sphere scale (shrinks on portrait screens). */
         scale?: number;
     }
 
-    // Defaults match the look you had hardcoded before.
     let {
         color = 0xf2f4f8,
         swirl = 0,
@@ -96,7 +95,7 @@
      * the target; `useTask` does the easing.
      */
     function onMove(event: PointerEvent) {
-        const center = size.current.width / 2;
+        const center = window.innerWidth / 2;
         let xPos = event.clientX - center;
 
         xPos = xPos > 0 ? xPos + POINTER_DEAD_ZONE : xPos - POINTER_DEAD_ZONE;

@@ -30,10 +30,8 @@
 
 <style>
     .stage {
-        position: fixed;
+        position: absolute;
         inset: 0;
-        width: 100vw;
-        height: 100vh;
-        background: radial-gradient(60% 60% at 50% 40%, #1f2125, #060607);
+        overflow: hidden;
     }
 </style>
