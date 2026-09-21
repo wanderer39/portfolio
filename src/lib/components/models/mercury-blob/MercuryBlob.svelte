@@ -11,10 +11,13 @@
         scale?: number;
         /** Cap for devicePixelRatio (perf vs. sharpness). */
         maxDpr?: number;
+          /** When false, the canvas stays mounted but stops rendering. */
+        active?: boolean;
     }
 
     let { 
-        maxDpr = 2, 
+        maxDpr = 2,
+        active = true, 
         ...sceneProps 
     }: Props = $props();
     
@@ -23,7 +26,7 @@
 </script>
 
 <div class="stage">
-    <Canvas {dpr} renderMode="always">
+    <Canvas {dpr} renderMode={active ? 'always' : 'manual'}>
         <MercuryScene {...sceneProps}/>
     </Canvas>
 </div>
