@@ -14,18 +14,15 @@
     }
 
     let { 
-        maxDpr = 3, 
+        maxDpr = 2, 
         ...sceneProps 
     }: Props = $props();
     
 
-    // Same pixel-ratio cap as before; guarded because this runs during SSR too.
-    const dpr = browser ? Math.min(window.devicePixelRatio, maxDpr) : 1;
+    const dpr = $derived(browser ? Math.min(window.devicePixelRatio, maxDpr) : 1);
 </script>
 
 <div class="stage">
-    <!-- Threlte's default renderer is transparent, so the CSS gradient shows through.
-         "always" keeps rendering every frame (Threlte defaults to on-demand). -->
     <Canvas {dpr} renderMode="always">
         <MercuryScene {...sceneProps}/>
     </Canvas>

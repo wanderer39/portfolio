@@ -23,15 +23,33 @@
         scale = 0.6
     }: Props = $props();
 
+
+    /** Animation speed per second. Equals 0.002 per frame at 60 fps. */
+    const SPEED = 0.002 * 60;
+
+    /** Noise amplitude (× 0.001) before the pointer has moved. */
+    const REST_AMPLITUDE = 500;
+ 
+    /** Pixels added to the pointer's distance from centre, so the blob is never fully calm. */
+    const POINTER_DEAD_ZONE = 200;
+ 
+    /** Key light orbit: radius in the XZ plane and fixed height. */
+    const KEY_LIGHT_RADIUS = 6;
+    const KEY_LIGHT_HEIGHT = 4;
+ 
+    /** Speed of the key light's orbit relative to the animation clock. */
+    const KEY_LIGHT_ORBIT_SPEED = 1.5;
     
+
     const { size } = useThrelte();
 
     // Plain object (not $state) so Svelte doesn't proxy it; it's mutated every frame.
     // Prop-driven values start neutral and are synced from props just below.
     const uniforms = {
+        // Animation
         u_time: { value: 0 },
         u_intensity: { value: 0.01 },
-        u_move: { value: 500 },
+        u_move: { value: REST_AMPLITUDE },              // noise amplitude, driven by the pointer
 
         // from props
         u_color: { value: new Color() },
@@ -55,23 +73,33 @@
         uniforms.u_freq.value.set(freq[0], freq[1], freq[2], freq[3]);
     });
 
-    // Original advanced 0.002 per frame at 60fps; same speed, frame-rate independent.
-    const SPEED = 0.002 * 60;
+    /** Animation clock in shader units. */
     let time = 0;
 
-    useTask((delta) => {
+    /** Runs once per frame, before Threlte renders.*/
+    useTask((delta: number) => {
         time += delta * SPEED;
         uniforms.u_time.value = time;
 
         // Orbit the key light around the blob
-        const a = time * 1.5;
-        uniforms.u_keyPos.value.set(Math.cos(a) * 6, 4, Math.sin(a) * 6);
+        const a = time * KEY_LIGHT_ORBIT_SPEED;
+        uniforms.u_keyPos.value.set(
+            Math.cos(a) * KEY_LIGHT_RADIUS, 
+            KEY_LIGHT_HEIGHT, 
+            Math.sin(a) * KEY_LIGHT_RADIUS
+        );
     });
 
+    /**
+     * Maps the pointer's horizontal distance from the screen centre to a noise
+     * amplitude: the further from the centre, the wilder the blob. Only stores
+     * the target; `useTask` does the easing.
+     */
     function onMove(event: PointerEvent) {
         const center = size.current.width / 2;
         let xPos = event.clientX - center;
-        xPos = xPos > 0 ? xPos + 200 : xPos - 200;
+
+        xPos = xPos > 0 ? xPos + POINTER_DEAD_ZONE : xPos - POINTER_DEAD_ZONE;
 
         uniforms.u_move.value = MathUtils.lerp(uniforms.u_move.value, xPos, 0.1);
     }
