@@ -4,7 +4,6 @@
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	import Landing from '$lib/components/home/Landing.svelte';
-	import Hero from '$lib/components/home/Hero.svelte';
 	import MercuryBlob from '../models/mercury-blob/MercuryBlob.svelte';
 
 	let { el = $bindable() }: { el?: HTMLElement } = $props();
@@ -119,6 +118,5 @@
 			</div>
 		</div>
 
-		<Hero />
 	</div>
 </section>
