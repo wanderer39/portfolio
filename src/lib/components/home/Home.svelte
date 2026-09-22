@@ -4,7 +4,8 @@
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	import Landing from '$lib/components/home/Landing.svelte';
-	import MercuryBlob from '../models/mercury-blob/MercuryBlob.svelte';
+	import MercuryBlob from '$lib/components/models/mercury-blob/MercuryBlob.svelte';
+	import { SplitText } from 'gsap/SplitText';
 
 	let { el = $bindable() }: { el?: HTMLElement } = $props();
 
@@ -12,14 +13,17 @@
 	let boxC: HTMLElement;
 	let blobEl: HTMLElement;
 
+	let heroEl: HTMLElement;
+	let leftText: HTMLParagraphElement;
+	let rightText: HTMLParagraphElement;
+	let leftMove: HTMLDivElement;
+	let rightMove: HTMLDivElement;
+
 	const SCALE_START = 0.8;
 	const SCALE_END = 0.6;
 
 	/** Phase 3: the blob shrinks to this scale as it fades out. */
 	const EXIT_SCALE = 0.3;
-
-	/** Phase 3 length, as a fraction of a viewport of scroll, ending exactly at the section's end. */
-	const EXIT_LENGTH = 0.5;
 
 	/** Reactive blob scale, driven by the scroll timeline below. */
 	let blobScale = $state(SCALE_START);
@@ -28,11 +32,30 @@
 	let blobActive = $state(true);
 
 	onMount(() => {
-		gsap.registerPlugin(ScrollTrigger);
+		gsap.registerPlugin(ScrollTrigger, SplitText);
 
 		const section = pinWrap.parentElement as HTMLElement;
 
 		const ctx = gsap.context(() => {
+			if (!heroEl || !leftText || !rightText) return;
+
+			const leftSplit = new SplitText(leftText, { type: 'lines' });
+			const rightSplit = new SplitText(rightText, { type: 'lines' });
+
+			const leftLines = leftSplit.lines;
+			const rightLines = rightSplit.lines;
+
+			[...leftLines, ...rightLines].forEach((line) => {
+				gsap.set(line.parentNode, { perspective: 2000 });
+			});
+
+			gsap.set([...leftLines, ...rightLines], {
+				opacity: 0,
+				rotationX: -90,
+				yPercent: 50,
+				transformOrigin: '50% 100%'
+			});
+
 			const scaleProxy = { v: SCALE_START };
 
 			// Phase 1 (first viewport of scroll): Landing is pinned, box expands to fullscreen.
@@ -62,6 +85,28 @@
 						}
 					},
 					0
+				)
+				// Hero text appears only after boxC has fully expanded
+				.to(leftLines, {
+					opacity: 1,
+					rotationX: 0,
+					yPercent: 0,
+					ease: 'power1.inOut',
+					stagger: 0.12,
+					duration: 0.8
+				})
+
+				.to(
+					rightLines,
+					{
+						opacity: 1,
+						rotationX: 0,
+						yPercent: 0,
+						ease: 'power1.inOut',
+						stagger: 0.12,
+						duration: 0.8
+					},
+					'<'
 				);
 
 			// Phase 2 (last viewport of the section): the wrapper scrolls away, so move the
@@ -86,7 +131,15 @@
 					defaults: { ease: 'none' },
 					scrollTrigger: {
 						trigger: section,
-						start: () => `bottom-=${window.innerHeight * EXIT_LENGTH} bottom`,
+						start: () => {
+							const sectionHeight = section.offsetHeight;
+							const viewportHeight = window.innerHeight;
+
+							const scrollDistance = sectionHeight - viewportHeight;
+							const remainingDistance = scrollDistance * 0.1;
+
+							return `bottom-=${remainingDistance}px bottom`;
+						},
 						end: 'bottom bottom',
 						scrub: true,
 						invalidateOnRefresh: true,
@@ -96,7 +149,47 @@
 					}
 				})
 				.to(blobEl, { scale: EXIT_SCALE, duration: 1 }, 0)
-				.to(blobEl, { opacity: 0, duration: 0.6 }, 0.4);
+				.to(blobEl, { opacity: 0, duration: 1 }, 0);
+
+			const movement = gsap.timeline({
+				scrollTrigger: {
+					trigger: section,
+					start: () => {
+						const sectionHeight = section.offsetHeight;
+						const viewportHeight = window.innerHeight;
+
+						const scrollDistance = sectionHeight - viewportHeight;
+						const remainingDistance = scrollDistance * 1;
+
+						return `bottom-=${remainingDistance}px bottom`;
+					},
+					end: 'bottom bottom',
+					scrub: true,
+					invalidateOnRefresh: true
+				}
+			});
+
+			movement
+				.to(
+					leftMove,
+					{
+						x: '-5rem',
+						opacity: 0,
+						ease: 'none',
+						duration: 0.3
+					},
+					0.7
+				)
+				.to(
+					rightMove,
+					{
+						x: '5rem',
+						opacity: 0,
+						ease: 'none',
+						duration: 0.3
+					},
+					0.7
+				);
 		});
 
 		return () => ctx.revert();
@@ -113,10 +206,23 @@
 				class="absolute inset-0 m-auto h-52 w-80 overflow-hidden rounded-[0.4rem] bg-(--dark-background)"
 			>
 				<div bind:this={blobEl} class="absolute inset-0">
-					<MercuryBlob scale={blobScale} active={blobActive}/>
+					<MercuryBlob scale={blobScale} active={blobActive} />
 				</div>
+
+				<!-- hero text -->
+				<div bind:this={heroEl} class="pointer-events-none fixed inset-0">
+					<div class="flex h-dvh w-full items-center justify-center">
+						<div bind:this={leftMove} class="absolute left-50 w-110 shrink-0 text-3xl">
+							<p bind:this={leftText}>Crafting refined experiences with thoughtful design.</p>
+						</div>
+
+						<div bind:this={rightMove} class="absolute right-50 w-110 shrink-0 text-3xl">
+							<p bind:this={rightText}>Bridging creative thinking with thoughtful engineering.</p>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
-
 	</div>
 </section>
