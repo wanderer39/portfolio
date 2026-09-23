@@ -52,7 +52,7 @@
 	}
 </script>
 
-<section bind:this={el} class="flex h-[150dvh] items-start justify-center">
+<section bind:this={el} class="flex h-[130dvh] items-start justify-center">
 	<div class="w-5/6 flex flex-col items-center justify-center">
 		{#each projects as project, index (index)}
 			<ProjectItem {index} title={project.title} category={project.category} {setModal} />

@@ -96,7 +96,7 @@
 			duration: 0.5,
 			scrollTrigger: {
 				trigger: secondSection.section,
-				start: 'top 5%',
+				start: 'top 40%',
 				end: '+=100',
 				onEnter: () => setColors(secondSection),
 				onLeaveBack: () => setColors(firstSection)
