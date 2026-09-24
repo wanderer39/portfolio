@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SkillsMarquee from './SkillsMarquee.svelte';
+	import SkillsMarquee from '$lib/components/about/SkillsMarquee.svelte';
 
 	const whatIDo = ['System Design', 'Backend Development', 'Data Analysis'];
 

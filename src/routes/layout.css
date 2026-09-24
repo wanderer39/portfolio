@@ -26,10 +26,19 @@
     src: url("/fonts/Rubik-Regular.woff2") format("woff2");
 }
 
+@font-face {
+    font-family: "Lora Regular";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/LoraRegular.woff2") format("woff2");
+}
+
 @theme {
     --font-inter: "Inter", "Helvetica Neue", Arial, sans-serif;                                     /* text-font */ 
     --font-montserrat: "Montserrat", "Helvetica Neue", Arial, sans-serif;                           /* heading-font */
     --font-rubik: "Rubik Regular", "Trebuchet MS", "Helvetica Neue", Arial, sans-serif;             /* button-font */
+    --font-lora: "Lora Regular", "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 
