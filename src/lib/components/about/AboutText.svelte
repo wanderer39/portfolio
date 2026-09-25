@@ -56,7 +56,7 @@
 <div class="flex w-3/4 items-start justify-start">
 	<h1
 		bind:this={heading}
-		class="font-montserrat text-2xl leading-8 font-[450] tracking-normal text-(--light-text) antialiased pr-8"
+		class="font-montserrat text-2xl leading-8 font-[450] tracking-normal antialiased pr-8"
 	>
 		I push the boundaries of technology, exploring data, backend systems, and emerging
 		engineering practices to build intelligent, scalable, and 

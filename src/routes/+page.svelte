@@ -110,7 +110,7 @@
 			duration: 0.5,
 			scrollTrigger: {
 				trigger: thirdSection.section,
-				start: 'top 5%',
+				start: 'top 95%',
 				end: '+=100',
 				onEnter: () => setColors(thirdSection),
 				onLeaveBack: () => setColors(secondSection)
@@ -130,5 +130,5 @@
 	<Home bind:el={homeSectionEl} />
 	<Projects bind:el={projectsSectionEl} />
 	<About bind:el={aboutSectionEl} />
-	<Footer bind:el={contactsSectionEl} aboutEl={aboutSectionEl}/>
+	<Footer bind:el={contactsSectionEl}/>
 </main>
