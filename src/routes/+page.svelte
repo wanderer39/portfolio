@@ -130,5 +130,5 @@
 	<Home bind:el={homeSectionEl} />
 	<Projects bind:el={projectsSectionEl} />
 	<About bind:el={aboutSectionEl} />
-	<Footer bind:el={contactsSectionEl} />
+	<Footer bind:el={contactsSectionEl} aboutEl={aboutSectionEl}/>
 </main>
