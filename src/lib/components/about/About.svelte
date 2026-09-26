@@ -8,7 +8,7 @@
 </script>
 
 <section bind:this={el} class="flex h-[200dvh] flex-col items-center justify-center">
-	<AboutHeader />
+	<!-- <AboutHeader /> -->
 
 	<!-- about info -->
 	<div class="flex h-full w-full items-center justify-center pt-8">
