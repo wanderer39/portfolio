@@ -1,5 +1,58 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import gsap from 'gsap';
+	import { SplitText } from 'gsap/SplitText';
+
 	let { el = $bindable() }: { el?: HTMLElement } = $props();
+
+	let emailLabelEl: HTMLSpanElement;
+	let isEmailShown = $state(false);
+
+	const DEFAULT_LABEL = 'Drop an email @';
+	const EMAIL_ADDRESS = 'wanderer3@tutamail.com';
+
+	function rollLabel(labelEl: HTMLElement, nextText: string) {
+		const outSplit = SplitText.create(labelEl, {
+			type: 'chars',
+			smartWrap: true
+		});
+
+		gsap.to(outSplit.chars, {
+			rotationX: -90,
+			transformOrigin: '50% 50% -20px',
+			autoAlpha: 0,
+			ease: 'power3.in',
+			duration: 0.5,
+			stagger: { amount: 0.3 },
+			onComplete: () => {
+				outSplit.revert();
+				labelEl.textContent = nextText;
+
+				const inSplit = SplitText.create(labelEl, {
+					type: 'chars',
+					smartWrap: true
+				});
+
+				gsap.from(inSplit.chars, {
+					rotationX: 90,
+					transformOrigin: '50% 50% -20px',
+					autoAlpha: 0,
+					ease: 'power3.out',
+					duration: 0.9,
+					stagger: { amount: 0.4 }
+				});
+			}
+		});
+	}
+
+	function handleEmailClick() {
+		isEmailShown = !isEmailShown;
+		rollLabel(emailLabelEl, isEmailShown ? EMAIL_ADDRESS : DEFAULT_LABEL);
+	}
+
+	onMount(() => {
+		gsap.registerPlugin(SplitText);
+	});
 </script>
 
 <section bind:this={el} class="h-dvh w-full">
@@ -12,22 +65,35 @@
 					</div>
 					<div>
 						<!-- email -->
-						<div
+						<button
+							type="button"
+							onclick={handleEmailClick}
 							class="flex h-14 w-64 items-center justify-center gap-6 rounded-full text-[1.1rem] outline-1 outline-(--light-accent)"
 						>
-							<span>Drop an email</span>
-							<span>@</span>
-						</div>
+							<span bind:this={emailLabelEl}>{DEFAULT_LABEL}</span>
+						</button>
 					</div>
 				</div>
 
 				<!-- socials -->
 				<div class="flex h-full w-1/2 flex-col items-center justify-center gap-8">
-					<div
-						class="flex translate-x-30 translate-y-12 flex-col gap-1 font-ppneuemontreal text-3xl no-underline"
-					>
-						<a href="https://www.linkedin.com/" class="link">Linkedin</a>
-						<a href="https://www.reddit.com/" class="link">Reddit</a>
+					<div class="flex translate-x-30 translate-y-12 flex-col gap-1 font-ppneuemontreal text-3xl no-underline">
+						<a
+							href="https://www.linkedin.com/in/binay-s-198a79316/"
+							class="link"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Linkedin
+						</a>
+						<a
+							href="https://www.reddit.com/user/Maximum_Art_431/"
+							class="link"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Reddit
+						</a>
 					</div>
 				</div>
 			</div>
