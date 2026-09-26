@@ -126,7 +126,7 @@
 
 <Navbar {lenis} {homeSectionEl} {projectsSectionEl} {aboutSectionEl} {contactsSectionEl} />
 
-<main bind:this={mainEl}>
+<main bind:this={mainEl} class="overflow-x-hidden">
 	<Home bind:el={homeSectionEl} />
 	<Projects bind:el={projectsSectionEl} />
 	<About bind:el={aboutSectionEl} />

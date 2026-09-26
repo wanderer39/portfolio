@@ -55,29 +55,33 @@
 	});
 </script>
 
-<section bind:this={el} class="h-dvh w-full">
-	<div class="h-dvh w-full">
-		<div class="h-1/2 w-full">
-			<div class="flex size-full px-8 pt-26">
-				<div class="flex h-full w-1/2 flex-col items-start justify-start gap-8">
+<section bind:this={el} class="h-dvh w-full overflow-hidden">
+	<div class="flex h-dvh w-full flex-col">
+		<div class="flex-1 w-full md:h-1/2">
+			<div class="flex size-full flex-col gap-10 px-6 pt-16 sm:px-8 md:flex-row md:gap-0 md:pt-26">
+				<div class="flex w-full flex-col items-start justify-start gap-6 md:h-full md:w-1/2 md:gap-8">
 					<div>
-						<h1 class="font-ppneuemontreal text-8xl">Let's talk</h1>
+						<h1 class="font-ppneuemontreal text-5xl sm:text-6xl md:text-8xl">Let's talk</h1>
 					</div>
 					<div>
 						<!-- email -->
 						<button
 							type="button"
 							onclick={handleEmailClick}
-							class="flex h-14 w-64 items-center justify-center gap-6 rounded-full text-[1.1rem] outline-1 outline-(--light-accent)"
+							class="flex h-12 w-56 items-center justify-center gap-4 rounded-full px-4 text-[0.95rem] outline-1 outline-(--light-accent) sm:h-14 sm:w-64 sm:gap-6 sm:text-[1.1rem]"
 						>
-							<span bind:this={emailLabelEl}>{DEFAULT_LABEL}</span>
+							<span bind:this={emailLabelEl} class="truncate">{DEFAULT_LABEL}</span>
 						</button>
 					</div>
 				</div>
 
 				<!-- socials -->
-				<div class="flex h-full w-1/2 flex-col items-center justify-center gap-8">
-					<div class="flex translate-x-30 translate-y-12 flex-col gap-1 font-ppneuemontreal text-3xl no-underline">
+				<div class="flex w-full flex-col items-start justify-center gap-8 md:h-full md:w-1/2 md:items-center">
+					<div
+						class="flex flex-col gap-1 font-ppneuemontreal text-xl no-underline
+							sm:text-2xl
+							md:translate-x-30 md:translate-y-12 md:text-3xl"
+					>
 						<a
 							href="https://www.linkedin.com/in/binay-s-198a79316/"
 							class="link"
@@ -99,9 +103,11 @@
 			</div>
 		</div>
 
-		<div class="h-1/2 w-full">
-			<div class="flex size-full items-center justify-center pt-36">
-				<h1 class="m-0 p-0 font-ppneuemontreal text-[21rem] leading-8 text-(--dark-text) uppercase">
+		<div class="flex-1 w-full md:h-1/2">
+			<div class="flex size-full items-center justify-center pt-10 md:pt-36">
+				<h1
+					class="m-0 p-0 text-center font-ppneuemontreal text-[clamp(2.5rem,16vw,21rem)] leading-8 text-(--dark-text) uppercase"
+				>
 					Wanderer
 				</h1>
 			</div>

@@ -53,8 +53,13 @@
 	});
 </script>
 
-<div class="flex w-[70%] items-start justify-start pt-2 pl-4">
-	<div bind:this={container} class="flex flex-col gap-4 font-lora text-9xl leading-28 uppercase">
+<div class="flex w-full items-start justify-center pt-2 md:w-[70%] md:justify-start md:pl-4">
+	<div
+		bind:this={container}
+		class="flex flex-col items-center gap-2 text-center font-lora text-5xl leading-10 uppercase
+			sm:text-6xl sm:leading-12
+			md:items-start md:gap-4 md:text-left md:text-9xl md:leading-28"
+	>
 		<h1>Think</h1>
 		<h1>Design</h1>
 		<h1>Build</h1>

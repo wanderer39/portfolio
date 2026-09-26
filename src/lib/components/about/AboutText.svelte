@@ -53,13 +53,15 @@
 	});
 </script>
 
-<div class="flex w-3/4 items-start justify-start">
+<div class="flex w-full items-start justify-center px-2 text-center md:w-3/4 md:justify-start md:px-0 md:text-left">
 	<h1
 		bind:this={heading}
-		class="font-montserrat text-2xl leading-8 font-[450] tracking-normal antialiased pr-8"
+		class="font-montserrat text-lg leading-7 font-[450] tracking-normal antialiased
+			sm:text-xl sm:leading-8
+			md:pr-8 md:text-2xl md:leading-8"
 	>
 		I push the boundaries of technology, exploring data, backend systems, and emerging
-		engineering practices to build intelligent, scalable, and 
-		thoughtfully designed digital experiences.
+		engineering practices to build intelligent, scalable, and thoughtfully designed digital
+		experiences.
 	</h1>
 </div>

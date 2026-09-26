@@ -211,17 +211,20 @@
 
 				<!-- hero text -->
 				<div bind:this={heroEl} class="pointer-events-none fixed inset-0">
-					<div class="flex h-dvh w-full items-center justify-center">
-						<div bind:this={leftMove} class="absolute left-50 w-110 shrink-0 text-3xl">
+					<div class="flex h-dvh w-full flex-col items-center justify-between px-6 py-20 md:relative md:flex-row md:items-center md:justify-center md:px-0 md:py-0">
+						<div
+							bind:this={leftMove}
+							class="w-full max-w-xs shrink-0 text-center text-xl leading-snug md:absolute md:left-50 md:w-110 md:max-w-none md:text-left md:text-3xl md:leading-normal">
 							<p bind:this={leftText}>Crafting refined experiences with thoughtful design.</p>
 						</div>
-
-						<div bind:this={rightMove} class="absolute right-50 w-110 shrink-0 text-3xl">
+						<div
+							bind:this={rightMove}
+							class="w-full max-w-xs shrink-0 text-center text-xl leading-snug md:absolute md:right-50 md:w-110 md:max-w-none md:text-left md:text-3xl md:leading-normal"
+						>
 							<p bind:this={rightText}>Bridging creative thinking with thoughtful engineering.</p>
 						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>

@@ -64,8 +64,8 @@
 	}
 </script>
 
-<section bind:this={el} class="flex h-[130dvh] items-start justify-center">
-	<div class="flex w-5/6 flex-col items-center justify-center">
+<section bind:this={el} class="flex min-h-[130dvh] items-start justify-center py-12 md:py-0">
+	<div class="flex w-full flex-col items-center justify-center px-4 sm:w-11/12 md:w-5/6 md:px-0">
 		{#each projects as project, index (index)}
 			<ProjectItem
 				{index}
