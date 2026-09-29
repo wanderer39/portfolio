@@ -4,9 +4,11 @@
 	import gsap from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-	import AboutImg from '$lib/assets/images/home-background.jpg';
+	// import AboutImg from '$lib/assets/images/home-background.jpg';
 
 	let aboutImgSection: HTMLDivElement;
+
+	const AboutImg = 'random.png';
 
 	onMount(() => {
 		gsap.registerPlugin(ScrollTrigger);

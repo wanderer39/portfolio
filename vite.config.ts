@@ -16,9 +16,11 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter()
+			adapter: adapter(),
+			inlineStyleThreshold: 40_000
 		})
 	],
+	build: { sourcemap: true },
 	test: {
 		expect: { requireAssertions: true },
 		projects: [

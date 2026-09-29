@@ -68,7 +68,7 @@
 						<button
 							type="button"
 							onclick={handleEmailClick}
-							class="flex h-12 w-56 items-center justify-center gap-4 rounded-full px-4 text-[0.95rem] outline-1 outline-(--light-accent) sm:h-14 sm:w-64 sm:gap-6 sm:text-[1.1rem]"
+							class="flex h-12 w-56 items-center justify-center gap-4 rounded-full px-4 text-[0.95rem] outline-1 outline-(--light-accent) sm:h-14 sm:w-64 sm:gap-6 sm:text-[1.1rem] cursor-pointer"
 						>
 							<span bind:this={emailLabelEl} class="truncate">{DEFAULT_LABEL}</span>
 						</button>

@@ -56,8 +56,10 @@
 	<!-- Headings: stacked column on mobile, contents (free to position absolutely) on md+ -->
 	<div class="flex flex-col gap-1 md:contents">
 		<div class="flex p-0 m-0 md:absolute md:top-32 md:left-8">
+			<!-- svelte-ignore a11y_unknown_role -->
 			<h1
 				bind:this={heroHeadingEls[0]}
+				role="text"
 				class="m-0 p-0 text-[clamp(2.75rem,13vw,10rem)] leading-[0.9] text-(--light-text) font-montserrat font-semibold italic md:text-[clamp(4rem,7vw,10rem)]"
 			>
 				Creative
@@ -65,8 +67,10 @@
 		</div>
 
 		<div class="flex justify-end p-0 m-0 md:absolute md:top-[81%] md:right-10 md:justify-start">
+			<!-- svelte-ignore a11y_unknown_role -->
 			<h1
 				bind:this={heroHeadingEls[1]}
+				role="text"
 				class="m-0 p-0 text-[clamp(2.75rem,13vw,10rem)] leading-[0.9] text-(--light-text) font-montserrat font-semibold italic md:text-[clamp(4rem,7vw,10rem)]"
 			>
 				Developer
@@ -78,8 +82,10 @@
 	<div
 		class="flex w-full max-w-md py-0 px-0 m-0 md:absolute md:top-[83%] md:left-10 md:h-24 md:w-126 md:max-w-none md:px-2"
 	>
+		<!-- svelte-ignore a11y_unknown_role -->
 		<p
 			bind:this={heroTextEl}
+			role="text"
 			class="m-0 p-0 text-[clamp(0.7rem,2.6vw,0.95rem)] leading-normal text-(--light-accent) font-inter font-normal uppercase md:text-[clamp(0.7rem,0.7vw,0.95rem)] md:leading-[1.4]"
 		>
 			Shaping ideas into refined digital experiences where creative thinking meets systems design, analytical problem-solving, and careful engineering to create work that is purposeful, intuitive, and built to last.

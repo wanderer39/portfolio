@@ -7,39 +7,35 @@
     font-style: normal;
     font-weight: 100 900;
     font-display: swap;
-    src: url("/fonts/InterVariable.woff2") format("woff2");
+    src: url("../lib/assets/fonts/InterVariable.woff2") format("woff2");
 }
-
 @font-face {
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 100 900;
     font-display: swap;
-    src: url("/fonts/MontserratVariable.woff2") format("woff2");
+    src: url("../lib/assets/fonts/MontserratVariable.woff2") format("woff2");
 }
-
 @font-face {
     font-family: "Rubik Regular";
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("/fonts/Rubik-Regular.woff2") format("woff2");
+    src: url("../lib/assets/fonts/Rubik-Regular.woff2") format("woff2");
 }
-
 @font-face {
     font-family: "Lora Regular";
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("/fonts/LoraRegular.woff2") format("woff2");
+    src: url("../lib/assets/fonts/LoraRegular.woff2") format("woff2");
 }
-
 @font-face {
     font-family: "PP Neue Montreal";
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: url("/fonts/ppneuemontreal-medium.otf") format("opentype");
+    src: url("../lib/assets/fonts/ppneuemontreal-medium.woff2") format("woff2");
 }
 
 @theme {

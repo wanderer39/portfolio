@@ -1,8 +1,5 @@
 <script lang="ts">
 	import ProjectItem from '$lib/components/projects/ProjectItem.svelte';
-	import ProjectModal from '$lib/components/projects/ProjectModal.svelte';
-
-	import HomeBackground from '$lib/assets/images/home-background.jpg';
 
 	let { el = $bindable() }: { el?: HTMLElement } = $props();
 
@@ -18,6 +15,8 @@
 		active: boolean;
 		index: number;
 	}
+
+	const HomeBackground = 'random.png';
 
 	const projects: ProjectsProps[] = [
 		{
@@ -76,5 +75,4 @@
 			/>
 		{/each}
 	</div>
-	<!-- <ProjectModal {modal} {projects} /> -->
 </section>
